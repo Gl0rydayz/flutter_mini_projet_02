@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:faker/faker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +11,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    String userName = faker.person.name();
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: Text("Mini_Projet_02"),
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(8, 13, 8, 13),
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     children: [
                       Text(
                         "Hi",
@@ -41,7 +45,7 @@ class MyApp extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "IOUIRY Oussama",
+                        userName,
                         style: TextStyle(
                           fontSize: 19,
                           decoration: TextDecoration.underline,
