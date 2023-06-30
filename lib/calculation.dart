@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_m_p_02/result.dart';
 
 class CalculationScreen extends StatefulWidget {
   const CalculationScreen({super.key});
@@ -103,6 +104,10 @@ class _CalculationScreenState extends State<CalculationScreen> {
                     try {
                       int firstNumber = int.parse(numberController01.text);
                       int secondNumber = int.parse(numberController02.text);
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ResultScreen(
+                              firstNumber, secondNumber, selectedOperation)));
                     } on Exception {
                       showDialog(
                         context: context,
