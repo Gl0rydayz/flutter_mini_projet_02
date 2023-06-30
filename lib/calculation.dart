@@ -8,7 +8,9 @@ class CalculationScreen extends StatefulWidget {
 }
 
 class _CalculationScreenState extends State<CalculationScreen> {
-  String selectedOperation = "";
+  String selectedOperation = "+";
+  TextEditingController numberController01 = TextEditingController();
+  TextEditingController numberController02 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,8 @@ class _CalculationScreenState extends State<CalculationScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const TextField(
+                TextField(
+                  controller: numberController01,
                   decoration: InputDecoration.collapsed(
                       hintText: "First Number",
                       border: UnderlineInputBorder(
@@ -42,6 +45,7 @@ class _CalculationScreenState extends State<CalculationScreen> {
                 SizedBox(
                   height: 15,
                 ),
+
                 //region Radio Buttons
                 ListTile(
                   title: const Text('+'),
@@ -61,9 +65,9 @@ class _CalculationScreenState extends State<CalculationScreen> {
                     value: "-",
                     groupValue: selectedOperation,
                     onChanged: (value) {
-                        setState(() {
-                          selectedOperation = value.toString();
-                        });
+                      setState(() {
+                        selectedOperation = value.toString();
+                      });
                     },
                   ),
                 ),
@@ -73,14 +77,16 @@ class _CalculationScreenState extends State<CalculationScreen> {
                     value: "*",
                     groupValue: selectedOperation,
                     onChanged: (value) {
-                        setState(() {
-                          selectedOperation = value.toString();
-                        });
+                      setState(() {
+                        selectedOperation = value.toString();
+                      });
                     },
                   ),
                 ),
                 //endregion
-                const TextField(
+
+                TextField(
+                  controller: numberController02,
                   decoration: InputDecoration.collapsed(
                     hintText: "Second Number",
                     border: UnderlineInputBorder(
@@ -89,10 +95,47 @@ class _CalculationScreenState extends State<CalculationScreen> {
                     )),
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Calculate"),
+                  onPressed: () {
+                    try {
+                      int firstNumber = int.parse(numberController01.text);
+                      int secondNumber = int.parse(numberController02.text);
+                    } on Exception {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) => AlertDialog(
+                          backgroundColor: Colors.blue.shade50,
+                          title: const Text("Caution"),
+                          content: const Row(
+                            children: [
+                              Icon(
+                                Icons.info,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Youd should enter Integers !!!")
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Understood'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text("Calculate"),
                 )
               ],
             ),
