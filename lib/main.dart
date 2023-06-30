@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
 
+import 'calculation.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -60,7 +64,10 @@ class MyApp extends StatelessWidget {
                   ),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CalculationScreen()));
+                    },
                     child: Text("Go"),
                   )
                 ],
