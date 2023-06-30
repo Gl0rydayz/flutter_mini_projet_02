@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter_m_p_02/info.dart';
 
 import 'calculation.dart';
 
@@ -58,7 +59,17 @@ class MyApp extends StatelessWidget {
                       Spacer(),
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                        child: Icon(Icons.info),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => InfoScreen())
+                            );
+                          },
+                          child: Icon(
+                            Icons.info,
+                            size: 35,
+                          ),
+                        ),
                       ),
                     ],
                   ),
