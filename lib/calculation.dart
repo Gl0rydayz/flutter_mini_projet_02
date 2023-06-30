@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class CalculationScreen extends StatelessWidget {
+class CalculationScreen extends StatefulWidget {
   const CalculationScreen({super.key});
+
+  @override
+  State<CalculationScreen> createState() => _CalculationScreenState();
+}
+
+class _CalculationScreenState extends State<CalculationScreen> {
+  String selectedOperation = "";
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +42,16 @@ class CalculationScreen extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
+                //region Radio Buttons
                 ListTile(
                   title: const Text('+'),
                   leading: Radio(
                     value: "+",
-                    groupValue: "",
+                    groupValue: selectedOperation,
                     onChanged: (value) {
-                      value;
+                      setState(() {
+                        selectedOperation = value.toString();
+                      });
                     },
                   ),
                 ),
@@ -49,9 +59,11 @@ class CalculationScreen extends StatelessWidget {
                   title: const Text('-'),
                   leading: Radio(
                     value: "-",
-                    groupValue: "",
+                    groupValue: selectedOperation,
                     onChanged: (value) {
-                        value;
+                        setState(() {
+                          selectedOperation = value.toString();
+                        });
                     },
                   ),
                 ),
@@ -59,12 +71,15 @@ class CalculationScreen extends StatelessWidget {
                   title: const Text('*'),
                   leading: Radio(
                     value: "*",
-                    groupValue: "",
+                    groupValue: selectedOperation,
                     onChanged: (value) {
-                        value;
+                        setState(() {
+                          selectedOperation = value.toString();
+                        });
                     },
                   ),
                 ),
+                //endregion
                 const TextField(
                   decoration: InputDecoration.collapsed(
                     hintText: "Second Number",
