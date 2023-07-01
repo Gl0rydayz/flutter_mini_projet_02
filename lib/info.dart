@@ -46,7 +46,9 @@ class InfoScreen extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(8),
-                        child: Text(infos[position]),
+                        child: Text(infos[position], style: TextStyle(
+                          fontSize: 20,
+                        ),),
                       ),
                     ),
                     SizedBox(height: 10),

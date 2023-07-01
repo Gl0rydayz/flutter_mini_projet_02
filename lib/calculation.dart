@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_m_p_02/result.dart';
 
+import 'database_helper.dart';
+
 class CalculationScreen extends StatefulWidget {
   const CalculationScreen({super.key});
 
@@ -12,6 +14,37 @@ class _CalculationScreenState extends State<CalculationScreen> {
   String selectedOperation = "+";
   TextEditingController numberController01 = TextEditingController();
   TextEditingController numberController02 = TextEditingController();
+  List<String> operationSymbols = [];
+
+  DatabaseHelper databaseHelper = DatabaseHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    loadSymbols();
+    addSymbol("+");
+    addSymbol("-");
+    addSymbol("*");
+    addSymbol("/");
+    deleteSymbol("%");
+  }
+
+  Future<void> loadSymbols() async {
+    final List<String> symbols = await databaseHelper.getSymbolsFromDb();
+    setState(() {
+      operationSymbols = symbols;
+    });
+  }
+
+  Future<void> addSymbol(String symbol) async {
+    await databaseHelper.insertSymbol(symbol);
+    await loadSymbols();
+  }
+
+  Future<void> deleteSymbol(String symbol) async {
+    await databaseHelper.deleteSymbol(symbol);
+    await loadSymbols();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,41 +81,22 @@ class _CalculationScreenState extends State<CalculationScreen> {
                 ),
 
                 //region Radio Buttons
-                ListTile(
-                  title: const Text('+'),
-                  leading: Radio(
-                    value: "+",
-                    groupValue: selectedOperation,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedOperation = value.toString();
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: const Text('-'),
-                  leading: Radio(
-                    value: "-",
-                    groupValue: selectedOperation,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedOperation = value.toString();
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  title: const Text('*'),
-                  leading: Radio(
-                    value: "*",
-                    groupValue: selectedOperation,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedOperation = value.toString();
-                      });
-                    },
-                  ),
+                Column(
+                  children: [
+                    for (String symbol in operationSymbols)
+                      ListTile(
+                        title: Text(symbol),
+                        leading: Radio(
+                          value: symbol,
+                          groupValue: selectedOperation,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedOperation = value.toString();
+                            });
+                          },
+                        ),
+                      ),
+                  ],
                 ),
                 //endregion
 

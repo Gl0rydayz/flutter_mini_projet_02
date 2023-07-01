@@ -19,6 +19,9 @@ class ResultScreen extends StatelessWidget {
       result = firstNumber - secondNumber;
     } else if (operation == "*") {
       result = firstNumber * secondNumber;
+    } else {
+      message = "This operation is\n not supported yet";
+      return;
     }
 
     message = "$firstNumber $operation $secondNumber = $result";
